@@ -1,13 +1,13 @@
 import { ButtonRed, ButtonWhite } from "./styles";
 
-function Button({ children, red }) { // Desestruturando o props para pegar apenas o children
+function Button({ children, red, ...rest }) { // Desestruturando o props para pegar apenas o children
 
     return (
         <>
             {red ? (
-                <ButtonRed>{children}</ButtonRed>
+                <ButtonRed {...rest}>{children}</ButtonRed>
             ) : (
-                <ButtonWhite>{children}</ButtonWhite>
+                <ButtonWhite {...rest}>{children}</ButtonWhite>
             )}
         </>
     )
