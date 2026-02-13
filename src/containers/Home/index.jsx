@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
-import api from '../../services/api';
+import { useNavigate } from 'react-router-dom';
 import { Background, Container, ContainerButton, Info, Poster } from './styles';
 import Button from '../../components/Button';
 import Slider from '../../components/Slider';
 import { getImages } from '../../utils/getImages';
 import Modal from '../../components/Modal';
+import { getMovies, getTopMovies, getTopSeries, getPopularSeries, getTopPeople } from '../../services/getData';
 
 function Home() {
     const [movie, setMovie] = useState()
@@ -13,68 +14,39 @@ function Home() {
     const [topSeries, setTopSeries] = useState()
     const [popularSeries, setPopularSeries] = useState()
     const [topPeople, setTopPeople] = useState()
+    const navigate = useNavigate()
 
-    useEffect(() => {
-        async function getMovies() {
-            const { data: { results }
-            } = await api.get('/movie/popular') //desestruturar a resposta da API
-
-            setMovie(results[1])
-        }
-
-         async function getTopMovies() {
-            const { data: { results }
-            } = await api.get('/movie/top_rated') //desestruturar a resposta da API
-
-            
-            setTopMovies(results)
-        }
-
-         async function getTopSeries() {
-            const { data: { results }
-            } = await api.get('/tv/top_rated') //desestruturar a resposta da API
-
-            
-            setTopSeries(results)
-        }
-
-        async function getPopularSeries() {
-            const { data: { results }
-            } = await api.get('/tv/popular') //desestruturar a resposta da API
-
-            
-            setPopularSeries(results)
-        } 
-        
-        async function getTopPeople() {
-            const { data: { results }
-            } = await api.get('/person/popular') //desestruturar a resposta da API
-
-            
-            setTopPeople(results)
+       useEffect(() => {
+        async function getAllData() {
+            Promise.all([
+                getMovies(),
+                getTopMovies(),
+                getTopSeries(),
+                getPopularSeries(),
+                getTopPeople()
+            ]).then(([movie, topMovies, topSeries, popularSeries, topPeople]) => {
+                setMovie(movie)
+                setTopMovies(topMovies)
+                setTopSeries(topSeries)
+                setPopularSeries(popularSeries)
+                setTopPeople(topPeople)
+            }).catch((error) => console.error(error))
         }
         
-        getMovies()
-        getTopMovies()
-        getTopSeries()
-        getPopularSeries()
-        getTopPeople()
-
-    }, []) // O useEffect vazio faz com que a função rode apenas uma vez quando o componente for montado
-
-
+        getAllData()
+    }, [])
 
     return (
         <>
             {movie && (
                 <Background img={getImages(movie.backdrop_path)}>
-                    {showModal && <Modal movieId={movie.id} setShowModal={setShowModal}/>}
+                    {showModal && <Modal movieId={movie.id} setShowModal={setShowModal} />}
                     <Container>
                         <Info>
                             <h1>{movie.title}</h1>
                             <p>{movie.overview}</p>
                             <ContainerButton>
-                                <Button red={true}>Assista Agora</Button>
+                                <Button red={true} onClick={() => navigate(`/detalhe/${movie.id}`)}>Assista Agora</Button>
                                 <Button red={false} onClick={() => setShowModal(true)}>Assista o Trailer</Button>
                             </ContainerButton>
                         </Info>
@@ -84,10 +56,10 @@ function Home() {
                     </Container>
                 </Background>
             )}
-            {topMovies && <Slider info={topMovies} title={'Top Filmes'}/>}
-            {topSeries && <Slider info={topSeries} title={'Top Séries'}/>}
-            {popularSeries && <Slider info={popularSeries} title={'Séries Populares'}/>}
-            {topPeople && <Slider info={topPeople} title={'Top Artistas'}/>}
+            {topMovies && <Slider info={topMovies} title={'Top Filmes'} />}
+            {topSeries && <Slider info={topSeries} title={'Top Séries'} />}
+            {popularSeries && <Slider info={popularSeries} title={'Séries Populares'} />}
+            {topPeople && <Slider info={topPeople} title={'Top Artistas'} />}
         </>
     )
 }

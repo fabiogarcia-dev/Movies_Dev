@@ -14,14 +14,15 @@ export const Background = styled.div`
         position: absolute;
         top: 0;
         left: 0;
-        width: 100%;
-        height: 100%;
+        width: 100vw;
+        height: 100vh;
         background-color: rgba(0, 0, 0, 0.5);
     }
 `
 
 export const Container = styled.div`
     display: flex;
+    margin-top: 100px;
     justify-content: space-around;
     align-items: center;
     height: 100%;
@@ -32,8 +33,9 @@ export const Info = styled.div`
     z-index: 2;
     padding: 20px;
     width: 50%;
+    margin-left: 100px;
     h1{
-        font-size: 5rem;
+        font-size: 3rem;
         font-weight: 700;
         color: #ffffff;
 
@@ -53,7 +55,7 @@ export const Poster = styled.div`
     img {
         width: 300px;
         border-radius: 30px;
-        
+        margin-right: 250px;
     }
 `
 
