@@ -5,7 +5,7 @@ export async function getMovies() {
         { data: { results }
         } = await api.get('/movie/popular') //desestruturar a resposta da API
 
-    return results[0]
+    return results[5]
 }
 
 export async function getTopMovies() {
@@ -36,9 +36,28 @@ export async function getTopPeople() {
     return results
 }    
 
-export async function getMovie(movieId) {
+export async function getMovieVideos(movieId) {
     const { data: { results }
             } = await api.get(`/movie/${movieId}/videos`) //desestruturar a resposta da API
 
-    return results[0]
+    return results
+}
+
+export async function getMovieCredits(movieId) {
+    const { data: { cast } } = await api.get(`/movie/${movieId}/credits`) //desestruturar a resposta da API
+
+    return cast
+}
+
+export async function getMovieSimilar(movieId) {
+    const { data: { results }
+            } = await api.get(`/movie/${movieId}/similar`) //desestruturar a resposta da API
+
+    return results
+}
+
+export async function getMovieById(movieId) {
+    const { data } = await api.get(`/movie/${movieId}`) //desestruturar a resposta da API
+
+    return data
 }
