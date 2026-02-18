@@ -22,6 +22,12 @@ export async function getTopSeries() {
     return results
 }
 
+
+export async function getPopularMovies(){
+    const { data: { results } } = await api.get("/movie/popular");
+    return results; 
+}
+
 export async function getPopularSeries() {
     const { data: { results }
     } = await api.get('/tv/popular') //desestruturar a resposta da API
@@ -60,4 +66,27 @@ export async function getMovieById(movieId) {
     const { data } = await api.get(`/movie/${movieId}`) //desestruturar a resposta da API
 
     return data
+}
+
+export async function getUpcomingMovies(){
+    const { data: { results } } = await api.get("/movie/upcoming");
+    return results; 
+}
+
+
+export async function getMovieNowPlaying(){
+    const { data: { results } } = await api.get("/movie/now_playing");
+    return results; 
+}
+
+
+export async function getSeriesToday(){
+    const { data: { results } } = await api.get("/tv/airing_today");
+    return results; 
+}
+
+
+export async function getSeriesNext(){
+    const { data: { results } } = await api.get("/tv/on_the_air");
+    return results; 
 }

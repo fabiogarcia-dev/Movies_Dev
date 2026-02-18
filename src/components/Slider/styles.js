@@ -3,6 +3,8 @@ import styled from 'styled-components';
 export const Container = styled.div`
     background: #000;
     padding: 0 20px;
+    overflow-x: hidden; /* evita scroll lateral da página */
+
 
     h2{
         color: #fff;
@@ -12,5 +14,7 @@ export const Container = styled.div`
 
     .swiper-wrapper {
         display: flex;
+        width: 100%;
     }
+
 `;
