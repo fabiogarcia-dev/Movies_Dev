@@ -26,6 +26,14 @@ export const Container = styled.div`
         border: none;
     }
 
+    img {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 30px;
+        cursor: pointer;
+    }
+
 `; 
 
 

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Background, Container } from "./styles";
 import { getMovieVideos } from "../../services/getData";
+import IcoClosed from "../../assets/Icone_fechar.png";
 
 function Modal({ movieId, setShowModal }) { // Desestruturando o props para pegar apenas o children
     const [movie, setMovie] = useState()
@@ -18,6 +19,11 @@ function Modal({ movieId, setShowModal }) { // Desestruturando o props para pega
         <Background onClick={() => setShowModal(false)}>
             {movie && (
                 <Container>
+                    <img
+                        src={IcoClosed}
+                        alt="Fechar"
+                        onClick={() => setShowModal(false)}
+                    />
                     <iframe
                         src={`https://www.youtube.com/embed/${movie[0].key}`}
                         title="Youtube Video Player"
